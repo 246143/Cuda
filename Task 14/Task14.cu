@@ -22,7 +22,7 @@ void run_custom_histogram_test() {
     std::cout << "\n--- Histogram Test: Custom Data ---\n";
  
     // Custom input array for testing histogram
-    int custom_data[] = {0, 1, 3, 2, 4, 6, 3, 8, 2, 4, 4, 8, 2, 3};
+    int custom_data[] = { };
     int data_size = sizeof(custom_data) / sizeof(custom_data[0]);           // datasize holds the number of elemets in array
  
     // Allocate memory for input data
@@ -91,6 +91,13 @@ void run_custom_histogram_test() {
 }
  
 int main() {
+iint sizes[] = {
+        1 << 10,   // 1K
+        1 << 13,   // 8K
+        1 << 16,   // 64K
+        1 << 18,   // 256K
+        1 << 20,   // 1M
+        1 << 22    // 4M
     run_custom_histogram_test();
     return 0;
 }
