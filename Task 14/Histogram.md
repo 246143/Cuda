@@ -67,10 +67,6 @@ blocks = ceil(dataSize / 256.0)
 - **CPU**: Loops over the input data and increments the count of the appropriate bin.
 - **GPU**: Launches many threads in parallel, each handling one input value.
 
-The program runs tests on **3 data sizes**:
-- 1K (1024 elements)
-- 64K (65536 elements)
-- 1M (1048576 elements)
 
 For each test, it reports:
 - Execution time on CPU and GPU
@@ -93,17 +89,16 @@ https://leetgpu.com/playground
 
 
 # sample output:
---- Histogram Test: Data Size = 1024 ---
-CPU Time: 2.918e-06 s
-GPU Time: 0.00172833 s
-✅ Histogram matches.
-
---- Histogram Test: Data Size = 65536 ---
-CPU Time: 0.00017625 s
-GPU Time: 0.000820406 s
-✅ Histogram matches.
-
---- Histogram Test: Data Size = 1048576 ---
-CPU Time: 0.00166255 s
-GPU Time: 0.202779 s
-✅ Histogram matches.
+--- Histogram Test: Custom Data ---
+CPU Time: 1.1e-07 s = o.oooooo1
+GPU Time: 0.000808953 s
+Histogram matches.
+ 
+Histogram output:
+Bin 0 => 1
+Bin 1 => 1
+Bin 2 => 3
+Bin 3 => 3
+Bin 4 => 3
+Bin 6 => 1
+Bin 8 => 2
