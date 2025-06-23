@@ -43,6 +43,20 @@ For example, in matrix transpose, each GPU thread handles one element swap from 
 - The matrix is transposed using:
   - A **CPU function** with nested loops
   - A **CUDA kernel** with 8×8 threads
+
+ # Using these formula:
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
+
+     blockIdx.x	Index of the current block along the X-axis
+     blockIdx.y	Index of the current block along the Y-axis
+      blockDim.x	Number of threads in a block along the X-axis
+     blockDim.y	Number of threads in a block along the Y-axis
+    threadIdx.x	Index of the thread inside the block along the X-axis
+     threadIdx.y	Index of the thread inside the block along the Y-axis
+
+
+
 - The output from both methods is printed.
 - The results are compared for correctness.
 - Execution time for CPU and GPU versions is displayed.
