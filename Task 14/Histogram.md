@@ -42,6 +42,13 @@ atomicAdd(&histo[data[i]], 1);
 
 This atomic operation ensures that multiple threads updating the same bin do not create race conditions.
 
+1.Histogram Calculation on CPU
+'''Uses a loop to count occurrences of values in a 256-bin histogram.
+Sequentially increments bin counts for each data element.'''
+
+2.Histogram Calculation on GPU (CUDA)
+'''Uses a CUDA kernel where each thread increments a histogram bin using atomicAdd.
+Parallel processing allows faster computation compared to the CPU.'''
 ---
 
 # Grid and Block Size Formula
