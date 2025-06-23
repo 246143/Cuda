@@ -47,6 +47,13 @@ For example, in matrix transpose, each GPU thread handles one element swap from 
 - The results are compared for correctness.
 - Execution time for CPU and GPU versions is displayed.
 
+- Performance Comparison
+Measures execution time on both CPU and GPU using std::chrono.
+Computes speedup factor (CPU Time / GPU Time).
+Ensures correctness by comparing results within an error tolerance.
+
+Uses dynamic memory allocation (cudaMalloc, cudaMemcpy) for GPU processing.
+
 
 
 
