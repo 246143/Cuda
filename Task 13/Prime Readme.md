@@ -65,13 +65,12 @@ Determines prime numbers sequentially.
 
 Prime Detection on GPU (CUDA):
 
-Uses a CUDA kernel where each thread evaluates a number’s primality in parallel.
+'''Uses a CUDA kernel where each thread evaluates a number’s primality in parallel.
 Divides workload dynamically among GPU threads for efficiency.
 Performance Comparison
 Measures execution time on both CPU and GPU using std::chrono.
 Computes speedup factor (CPU Time / GPU Time).
-Ensures correctness by comparing results with an error tolerance.
----
+Ensures correctness by comparing results with an error tolerance'''
 
 #  Performance Measurement
 
