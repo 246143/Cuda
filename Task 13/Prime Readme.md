@@ -58,12 +58,12 @@ In this project:
 # Code Overview
 
  # How It Works
-Prime Detection on CPU:
+1.Prime Detection on CPU:
 
 Uses a loop to check divisibility for each number up to N = 1,000,000.
 Determines prime numbers sequentially.
 
-Prime Detection on GPU (CUDA):
+2.Prime Detection on GPU (CUDA):
 
 '''Uses a CUDA kernel where each thread evaluates a number’s primality in parallel.
 Divides workload dynamically among GPU threads for efficiency.
