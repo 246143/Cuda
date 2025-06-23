@@ -35,8 +35,8 @@ return;
 // =================== CPU Prime Finder =================== //
 void findPrimesCPU(bool* primes) {
     for (int i = 2; i <= N; ++i) {
-        primes[i] = true;
-        for (int j = 2; j * j <= i; ++j) {
+        primes[i] = true;             //Assume that i is prime at first.
+        for (int j = 2; j * j <= i; ++j) {            //Try dividing i by every number j from 2 to √i.
             if (i % j == 0) {
                 primes[i] = false;
                 break;
