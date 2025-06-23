@@ -57,20 +57,20 @@ In this project:
 
 # Code Overview
 
-# CPU Prime Checker
+ # How It Works
+Prime Detection on CPU:
 
-Uses trial division:
-- For each number from 2 to N:
-  - Checks all integers up to √N
-  - If divisible, it’s not a prime
+Uses a loop to check divisibility for each number up to N = 1,000,000.
+Determines prime numbers sequentially.
 
-# GPU Prime Checker (CUDA Kernel)
+Prime Detection on GPU (CUDA):
 
-Each GPU thread:
-- Receives one number
-- Performs the same trial division as CPU
-- Stores result (`true` = prime) in global GPU memory
-
+Uses a CUDA kernel where each thread evaluates a number’s primality in parallel.
+Divides workload dynamically among GPU threads for efficiency.
+Performance Comparison
+Measures execution time on both CPU and GPU using std::chrono.
+Computes speedup factor (CPU Time / GPU Time).
+Ensures correctness by comparing results with an error tolerance.
 ---
 
 #  Performance Measurement
