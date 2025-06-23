@@ -57,7 +57,7 @@ int blocks = (dataSize + threadsPerBlock - 1) / threadsPerBlock;
 
 This ensures that if `dataSize` isn't an exact multiple of 256, the last partial block still processes the remaining data. It is equivalent to:
 ```
-blocks = ceil(dataSize / 256.0)
+blocks = cell(dataSize / 256.0)
 ```
 
 ---
