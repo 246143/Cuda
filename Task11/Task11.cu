@@ -19,7 +19,7 @@ int N = 1 << 16;                                // 65536 elements
 
 // CUDA Kernel: Vector addition on GPU
 __global__ void vectorAddCUDA(const float* A, const float* B, float* C, int n) {                     
-    int i = blockIdx.x * blockDim.x + threadIdx.x;                                         //i=(block index)×(threads per block)+(thread index within the block)                                                   
+    int i = blockIdx.x * blockDim.x + threadIdx.x;                                         //i=(block index)×(threads per block)+(thread index within the block)       (i is the global index)                                             
     if (i < n) C[i] = A[i] + B[i];
 }
 
@@ -47,7 +47,7 @@ int main() {
     // Initialize vectors
     for (int i = 0; i < N; ++i) {
         h_A[i] = static_cast<float>(i);                      
-        h_B[i] = static_cast<float>(2 * i);
+        h_B[i] = static_cast<float>(2 * i);     //type casting 
     }
 
     // --- CPU computation ---
