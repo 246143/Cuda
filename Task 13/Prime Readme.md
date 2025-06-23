@@ -28,7 +28,7 @@ It compares both for:
 # What Is a Prime Number?
 
 A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.
-
+A number n is prime if it's not divisible by any number from 2 to √n.
 Examples:
 -  Prime: `2`, `3`, `5`, `7`, `11`
 -  Not Prime: `4`, `6`, `9`, `12`
