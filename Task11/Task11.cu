@@ -20,7 +20,9 @@ int N = 1 << 16;                                // 65536 elements
 // CUDA Kernel: Vector addition on GPU
 __global__ void vectorAddCUDA(const float* A, const float* B, float* C, int n) {                     
     int i = blockIdx.x * blockDim.x + threadIdx.x;                                         //i=(block index)×(threads per block)+(thread index within the block)       (i is the global index)                                             
-    if (i < n) C[i] = A[i] + B[i];
+    if (i < n){
+        C[i] = A[i] + B[i];
+}
 }
 
 // Sequential vector addition on CPU
