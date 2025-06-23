@@ -4,100 +4,91 @@
 //  Provide performance comparisons and rigorous correctness checks against single-threaded solutions.
 
 
-
-
-
 #include <iostream>
-#include <cstdlib>       
-#include <ctime>               // fofr time libraries                 
-#include <chrono>                // for computing time of cpu & gpu 
-#include <cuda_runtime.h>              // CUDA Runtime API header i
-
-#define BIN_COUNT 256           /// Number of histogram bins
-
-// CUDA kernel
+#include <chrono>
+#include <cuda_runtime.h>
+ 
+#define BIN_COUNT 256  // Number of histogram bins
+ 
+// CUDA kernel to compute histogram
 __global__ void histogram_kernel(unsigned char* data, int* histo, int size) {
-    int i = threadIdx.x + blockIdx.x * blockDim.x;   //i=(block index)×(threads per block)+(thread index within block) example formula
+    int i = threadIdx.x + blockIdx.x * blockDim.x;
     if (i < size) {
-        atomicAdd(&histo[data[i]], 1);    //  thread-safe increment of a specific element in the histogram array.
-
+        atomicAdd(&histo[data[i]], 1);  // Thread-safe bin update
     }
 }
-
-void run_histogram_test(int data_size) {
-    std::cout << "\n--- Histogram Test: Data Size = " << data_size << " ---\n";
-
-    // Generate random input
-    unsigned char* data = new unsigned char[data_size];                         //allocates memory dynamically for an array (creates a pointer named data that points to this newly allocated memory.)
+ 
+void run_custom_histogram_test() {
+    std::cout << "\n--- Histogram Test: Custom Data ---\n";
+ 
+    // Custom input values (feel free to modify!)
+    int custom_data[] = {0, 1, 3, 2, 4, 6, 3, 8, 2, 4, 4, 8, 2, 3};
+    int data_size = sizeof(custom_data) / sizeof(custom_data[0]);
+ 
+    // Allocate memory for input data
+    unsigned char* data = new unsigned char[data_size];
     for (int i = 0; i < data_size; ++i)
-        data[i] = rand() % BIN_COUNT;         // assigns a random value to the ith element of the array data.
-
-    // CPU histogram
-    int hist_cpu[BIN_COUNT] = {0};              //declares and initializes an array called cpu with a size of BIN_COUNT, setting all its elements to zero.
-
-
+        data[i] = static_cast<unsigned char>(custom_data[i]);
+ 
+    // --- CPU Histogram ---
+    int hist_cpu[BIN_COUNT] = {0};
     auto start_cpu = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < data_size; ++i)
         hist_cpu[data[i]]++;
     auto end_cpu = std::chrono::high_resolution_clock::now();
     double cpu_time = std::chrono::duration<double>(end_cpu - start_cpu).count();
-
-    // GPU memory allocation
-    unsigned char* d_data;    //declares a pointer named d_data
+ 
+    // --- GPU Setup ---
+    unsigned char* d_data;
     int* d_hist;
-    cudaMalloc(&d_data, data_size);                // memory allocation
+    cudaMalloc(&d_data, data_size);
     cudaMalloc(&d_hist, BIN_COUNT * sizeof(int));
-    cudaMemcpy(d_data, data, data_size, cudaMemcpyHostToDevice);             // memory copying
-    cudaMemset(d_hist, 0, BIN_COUNT * sizeof(int));           //sets a block of GPU memory starting at d_hist to zero.
-
-    // Launch kernel
+    cudaMemcpy(d_data, data, data_size, cudaMemcpyHostToDevice);
+    cudaMemset(d_hist, 0, BIN_COUNT * sizeof(int));
+ 
+    // Launch GPU kernel
     int threads = 256;
-    int blocks = (data_size + threads - 1) / threads;    //The formula ensures that all data elements are assigned to threads for parallel processing.
-
-    cudaDeviceSynchronize();        //It blocks the CPU thread until all previously submitted CUDA tasks on the device are completed.
+    int blocks = (data_size + threads - 1) / threads;
+ 
+    cudaDeviceSynchronize();  // Sync before timing
     auto start_gpu = std::chrono::high_resolution_clock::now();
     histogram_kernel<<<blocks, threads>>>(d_data, d_hist, data_size);
-    cudaDeviceSynchronize();
+    cudaDeviceSynchronize();  // Sync after kernel
     auto end_gpu = std::chrono::high_resolution_clock::now();
     double gpu_time = std::chrono::duration<double>(end_gpu - start_gpu).count();
-
-    // Copy back results
+ 
+    // --- Copy Results from GPU ---
     int hist_gpu[BIN_COUNT];
     cudaMemcpy(hist_gpu, d_hist, BIN_COUNT * sizeof(int), cudaMemcpyDeviceToHost);
-
-    // Compare results
+ 
+    // --- Compare CPU and GPU Results ---
     bool match = true;
     for (int i = 0; i < BIN_COUNT; ++i) {
         if (hist_cpu[i] != hist_gpu[i]) {
             match = false;
             std::cout << "Mismatch at bin " << i << ": CPU = " << hist_cpu[i]
-                      << ", GPU = " << hist_gpu[i] << "\n";
-            break;
+<< ", GPU = " << hist_gpu[i] << "\n";
         }
     }
-
+ 
+    // Print results
     std::cout << "CPU Time: " << cpu_time << " s\n";
     std::cout << "GPU Time: " << gpu_time << " s\n";
-    std::cout << (match ? " Histogram matches.\n" : " Histogram mismatch!\n");
-
+    std::cout << (match ? "Histogram matches.\n" : "Histogram mismatch!\n");
+ 
+    std::cout << "\nHistogram output:\n";
+    for (int i = 0; i < 16; ++i) {
+        if (hist_cpu[i] > 0)
+            std::cout << "Bin " << i << " => " << hist_cpu[i] << "\n";
+    }
+ 
+    // Free memory
     delete[] data;
     cudaFree(d_data);
     cudaFree(d_hist);
 }
-
+ 
 int main() {
-    srand(static_cast<unsigned>(time(0)));                 // the random number generator with the current time to produce different pseudo-random sequences each run.
-
-    // Test with 3 sizes only
-    int sizes[] = {
-        1 << 10,   // 1K
-        1 << 16,   // 64K
-        1 << 20    // 1M
-    };
-
-    for (int size : sizes) {
-        run_histogram_test(size);
-    }
-
+    run_custom_histogram_test();
     return 0;
 }
