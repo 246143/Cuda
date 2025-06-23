@@ -100,9 +100,4 @@ GPU Time: 557.41 microseconds
 
 ---
 
-# Notes
-
-- The current version uses a **1D array** to represent the 2D matrix for performance and simplicity.
-- Results are compared using floating point tolerance (`1e-5`).
-- For large matrices (e.g. 1024×1024), change `#define N 8` accordingly.
 
