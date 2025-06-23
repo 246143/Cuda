@@ -26,7 +26,7 @@ CUDA (Compute Unified Device Architecture) is a parallel computing platform and 
 
 
 vector_add/
-├── vector_add.cu     # Main C++17 CUDA source file
+├── vectoraddition.cu     # Main C++17 CUDA source file
 ├── README.md         # This file
 
 
