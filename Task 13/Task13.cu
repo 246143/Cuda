@@ -17,8 +17,11 @@
 // =================== CUDA Kernel =================== //
 __global__ void findPrimesCUDA(bool* d_primes) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x + 2;                              // Skip 0 and 1
-    if (idx > N) return;
-
+    if (idx > N) 
+{
+return;
+}
+}
     bool prime = true;
     for (int i = 2; i <= sqrtf((float)idx); ++i) {   // it is To test if idx is divisible by any number from 2 up to the square root of idx.
         if (idx % i == 0) {
