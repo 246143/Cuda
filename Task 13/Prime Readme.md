@@ -136,11 +136,10 @@ Ensures correctness of the CUDA parallel result.
 
 ---
 
-## 📁 Project Structure
+# Project Structure
 
-| File                  | Description                          |
-|-----------------------|--------------------------------------|
-| `primefider.cu`| Full source code (CUDA + CPU logic)  |
-| `prime README.md`           | Documentation with code explanation  |
+ File                 
+ `primefider.cu`
+ `prime README.md`        
 
 -
