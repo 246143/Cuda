@@ -28,7 +28,9 @@ void run_custom_histogram_test() {
     // Allocate memory for input data
     unsigned char* data = new unsigned char[data_size];
     for (int i = 0; i < data_size; ++i)
-        data[i] = static_cast<unsigned char>(custom_data[i]);
+        data[i] = static_cast<unsigned char>(custom_data[i]);          //copying a value from one array (custom_data[]) into another array (data[]), converting the data type in the process.
+
+
  
     // --- CPU Histogram ---
     int hist_cpu[BIN_COUNT] = {0};
