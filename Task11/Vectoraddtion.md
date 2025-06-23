@@ -18,7 +18,6 @@ CUDA (Compute Unified Device Architecture) is a parallel computing platform and 
 - Adds two large vectors (`float` arrays) element-wise
 - Runs the computation on both CPU and GPU
 - Measures and compares performance
-- Checks result correctness with a simple tolerance threshold
 - Uses modern C++17 features
 
 
